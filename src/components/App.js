@@ -6,6 +6,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import Grid from './Grid';
+import Form from './Form';
 
 
 // Notre composant de base "App.js" de type classe(Statefull)
@@ -53,8 +54,8 @@ class App extends Component {
             </div>
           </nav>
         </div>
-
         <div>
+          <Form />
           <Grid items={this.state.data} />
         </div>
 

@@ -9,7 +9,7 @@ const Single = (props) => {
         <li className="col s12 l6">
             <div className="card">
 
-                {/* Image et Nom Prenom - Entreprise */}
+                {/* Image et Nom, Prenom - Entreprise */}
                 <div className="card-image">
                     <img src="./portrait.jpg" alt={props.item.title} />
                     <span className="card-title">{props.item.prenom} {props.item.nom} - {props.item.compagnie} </span>
