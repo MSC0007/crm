@@ -36,7 +36,7 @@ class Form extends Component {
                             </div>
                         </div>
                     </div>
-                    {/* Troisieme section de notre formulaire(Notes, Bouton) */}
+                    {/* Troisieme section de notre formulaire(Notes, Bouton "Ajouter") */}
                     <div class="row">
                         <div class="row">
                             <div class="input-field col s8">

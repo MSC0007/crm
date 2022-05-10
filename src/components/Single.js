@@ -15,13 +15,18 @@ const Single = (props) => {
                     <span className="card-title">{props.item.prenom} {props.item.nom} - {props.item.compagnie} </span>
                 </div>
 
-                {/* Description ou contenu de la carte (blockquote et Notes) */}
+                {/* Description du contenu de la carte (blockquote et Notes) */}
                 <div className="card-content">
                     <span className="card-title" >{props.item.email} </span>
                     <div className="row">
                         <div className="col l6 center"></div>
                         <blockquote > <h5> {props.item.notes}</h5> </blockquote>
                     </div>
+                </div>
+
+                {/* Section Bouton "Supprimer" */}
+                <div className='card-action'>
+                    <button className="waves-effect waves-light btn red darken-4">Supprimer</button>
                 </div>
 
             </div>
