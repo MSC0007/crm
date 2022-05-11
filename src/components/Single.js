@@ -15,7 +15,7 @@ const Single = (props) => {
                     <span className="card-title">{props.item.prenom} {props.item.nom} - {props.item.compagnie} </span>
                 </div>
 
-                {/* Description du contenu de la carte (blockquote et Notes) */}
+                {/* Description du contenu de la carte (email, blockquote et Notes) */}
                 <div className="card-content">
                     <span className="card-title" >{props.item.email} </span>
                     <div className="row">

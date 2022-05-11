@@ -1,12 +1,10 @@
 // Les imports
 import React, { Component } from 'react';
 import './App.css';
-import data from '../data.json';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
+import firebase from '../firebase';
 import Grid from './Grid';
 import Form from './Form';
+
 
 
 // Notre composant de base "App.js" de type classe(Statefull)
@@ -17,31 +15,53 @@ class App extends Component {
     // Passage des proprietés à l'element parent
     super(props)
     // Utilisation du state pour charger les données depuis la collection "data.json"
-    this.state = { data }
+    // Initilisation de 'contacts' avec un array vide.
+    this.state = {
+      contacts: []
+    }
+  }
+
+  // Fonction "updateData()" pour recuperer les données depuis "firebase.firestore"
+  updateData() {
+    // Constante "db" pour stocker les identifiants de connexion à la base firestore.
+    const db = firebase.firestore();
+    // Constante "settings" pour avoir les bonnes dates avec "firestore".
+    const settings = { timestampsInSnapshots: true }
+    // On passe les parametres/settings à firestore en executant la methode "settings()".
+    db.settings(settings);
+    // Recuperation des documents de notre collection "contacts"
+    db.collection('contacts').get()
+      // Utilisation d'un "snapshot" en entrée pour du traitement en sortie avec le "then".
+      .then((snapshot) => {
+        // Tableau vide crée pour recuperer plus-bas les objets/doc avec "push()".
+        let contacts = [];
+        // Pour chaque "snapshot", avec forEach() on recupere un objet pour chaque document(doc). 
+        snapshot.forEach((doc) => {
+          let contact = Object.assign({ id: doc.id }, doc.data());
+          // On passe l'objet "contact" à notre tableau "contacts" crée precedement.
+          contacts.push(contact);
+        });
+        // Mise à jour de notre state avec setState().
+        this.setState({
+          // On pourrait simplement mettre "contacts" uniquement car c'est une variable globale 
+          // et c'est la derniere valeur qui sera prise en compte.
+          contacts: contacts
+        });
+      })
+      // En cas d'erreur, on l'affiche sur la console dans le "catch".
+      .catch((err) => {
+        console.log('Erreur FireStore :', err);
+      })
+
   }
 
 
-  // On initialise Firebase avant le montage(componentWillMount()) de notre composant "App.js".
+  // On va mettre à jour les contacts depuis firebase avec "componentWillMount()" :
   componentWillMount() {
-
-    // Utilisation de la clé d'accés(API Key) pour initialiser notre backend en ligne(firebase).
-    firebase.initializeApp({
-      apiKey: "AIzaSyBg25HMnjgrfDdSj2mVtZIx5vpgkIMYoG4",
-
-      authDomain: "crm-linkedin-b8225.firebaseapp.com",
-
-      projectId: "crm-linkedin-b8225",
-
-      storageBucket: "crm-linkedin-b8225.appspot.com",
-
-      messagingSenderId: "178940971072",
-
-      appId: "1:178940971072:web:0937afcaedbc36654577a5",
-
-      measurementId: "G-1MCMEXD69H"
-
-    })
+    // Execution de "updateData()" aussitot que le composant "App.js" est monté.
+    this.updateData();
   }
+
 
   // Methode "render()" de notre composant principal "App.js"
   render() {
@@ -55,8 +75,9 @@ class App extends Component {
           </nav>
         </div>
         <div>
-          <Form />
-          <Grid items={this.state.data} />
+          {/* Envoi de la fonction "updateData" en propriété au composant "Form.js"  */}
+          <Form updateData={this.updateData.bind(this)} />
+          <Grid items={this.state.contacts} />
         </div>
 
       </div>
