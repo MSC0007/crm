@@ -56,6 +56,20 @@ class App extends Component {
   }
 
 
+  // Fonction "deletData()" pour supprimer un document grace à son ID "docID".
+  deleteData(docID) {
+    // Les trois ci-dessous sont pour la connexion à firestore
+    const db = firebase.firestore();
+    const settings = { timestampsInSnapshots: true }
+    db.settings(settings);
+
+    // Pour supprimer un document de la collection "contacts"
+    db.collection('contacts').doc(docID).delete();
+    // Mise à jour de l'interface Utilisateur
+    this.updateData();
+
+  }
+
   // On va mettre à jour les contacts depuis firebase avec "componentWillMount()" :
   componentWillMount() {
     // Execution de "updateData()" aussitot que le composant "App.js" est monté.
