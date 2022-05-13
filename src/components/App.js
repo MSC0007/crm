@@ -13,12 +13,12 @@ class App extends Component {
   // Creation d'un constructeur en lui passant les proprietes de notre composant.
   constructor(props) {
     // Passage des proprietés à l'element parent
-    super(props)
+    super(props);
     // Utilisation du state pour charger les données depuis la collection "data.json"
     // Initilisation de 'contacts' avec un array vide.
     this.state = {
       contacts: []
-    }
+    };
   }
 
   // Fonction "updateData()" pour recuperer les données depuis "firebase.firestore"
@@ -26,9 +26,9 @@ class App extends Component {
     // Constante "db" pour stocker les identifiants de connexion à la base firestore.
     const db = firebase.firestore();
     // Constante "settings" pour avoir les bonnes dates avec "firestore".
-    const settings = { timestampsInSnapshots: true }
+    // const settings = { timestampsInSnapshots: true };
     // On passe les parametres/settings à firestore en executant la methode "settings()".
-    db.settings(settings);
+    //db.settings(settings);
     // Recuperation des documents de notre collection "contacts"
     db.collection('contacts').get()
       // Utilisation d'un "snapshot" en entrée pour du traitement en sortie avec le "then".
@@ -51,7 +51,7 @@ class App extends Component {
       // En cas d'erreur, on l'affiche sur la console dans le "catch".
       .catch((err) => {
         console.log('Erreur FireStore :', err);
-      })
+      });
 
   }
 
@@ -60,14 +60,13 @@ class App extends Component {
   deleteData(docID) {
     // Les trois ci-dessous sont pour la connexion à firestore
     const db = firebase.firestore();
-    const settings = { timestampsInSnapshots: true }
-    db.settings(settings);
+    //const settings = { timestampsInSnapshots: true };
+    //db.settings(settings);
 
     // Pour supprimer un document de la collection "contacts"
     db.collection('contacts').doc(docID).delete();
     // Mise à jour de l'interface Utilisateur
     this.updateData();
-
   }
 
   // On va mettre à jour les contacts depuis firebase avec "componentWillMount()" :
@@ -75,7 +74,6 @@ class App extends Component {
     // Execution de "updateData()" aussitot que le composant "App.js" est monté.
     this.updateData();
   }
-
 
   // Methode "render()" de notre composant principal "App.js"
   render() {
@@ -91,7 +89,7 @@ class App extends Component {
         <div>
           {/* Envoi de la fonction "updateData" en propriété au composant "Form.js"  */}
           <Form updateData={this.updateData.bind(this)} />
-          <Grid items={this.state.contacts} />
+          <Grid items={this.state.contacts} deleteData={this.deleteData.bind(this)} />
         </div>
 
       </div>

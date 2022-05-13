@@ -20,24 +20,24 @@ class Form extends Component {
         let newContact = {
             // e.target.fieldId.value
             prenom: e.target.prenom.value,
-            nom: e.taget.nom.value,
+            nom: e.target.nom.value,
             email: e.target.email.value,
             compagnie: e.target.compagnie.value,
-            notes: e.target.notes.value
+            notes: e.target.notes.value,
         }
 
         // Constante "db" pour stocker les identifiants de connexion à la base firestore.
         const db = firebase.firestore();
         // Constante "settings" pour avoir les bonnes dates avec "firestore".
-        const settings = { timestampsInSnapshots: true }
+        //const settings = { timestampsInSnapshots: true };
         // On passe les parametres/settings à firestore en executant la methode "settings()".
-        db.settings(settings);
+        //db.settings(settings);
 
         // Ajout de l'objet "newContact"
         db.collection('contacts').add(newContact);
 
         // Recuperation du formulaire  pour effacer les champs aprés soumission avec "reset()"
-        document.getElementById('addContact').reset();
+        document.getElementById("addContact").reset();
 
         // Mise à jour de l'interface avec "updateData()"
         this.updateData();

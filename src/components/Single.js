@@ -26,7 +26,8 @@ const Single = (props) => {
 
                 {/* Section Bouton "Supprimer" */}
                 <div className='card-action'>
-                    <button className="waves-effect waves-light btn red darken-4">Supprimer</button>
+                    {/* On passe la fonction "deleteData" au bouton supprimer */}
+                    <button className="waves-effect waves-light btn red darken-4" onClick={props.deleteData.bind(this, props.item.id)}>Supprimer</button>
                 </div>
 
             </div>
